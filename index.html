@@ -1,408 +1,313 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project HMS 2025</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Menggunakan font yang bersih dan kaku untuk kesan teknis */
-        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project HMS 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Menggunakan font yang bersih dan kaku untuk kesan teknis */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
 
-        /* TEMA BARU: Hitam Minimalis - REVISI 2 */
-        body {
-            font-family: 'Roboto Mono', monospace;
-            background-color: #000; /* Hitam pekat */
-            background-image: url("data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 10 10' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23111' fill-opacity='0.6' fill-rule='evenodd'%3E%3Cpath d='M0 10l10-10m-5 0l10 10m-5-10l10 10'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
-                linear-gradient(135deg, #111 0%, #000 100%); /* Gradasi sangat gelap */
-            min-height: 100vh;
-            transition: background-image 0.7s ease-in-out;
-            padding-top: 60px;
-            box-sizing: border-box;
-            color: #c0c0c0; /* Warna teks abu-abu terang */
-        }
+        /* TEMA BARU: Hitam Minimalis - REVISI 2 */
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background-color: #000;
+            background-image: url("data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 10 10' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23111' fill-opacity='0.6' fill-rule='evenodd'%3E%3Cpath d='M0 10l10-10m-5 0l10 10m-5-10l10 10'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+                linear-gradient(135deg, #111 0%, #000 100%);
+            min-height: 100vh;
+            transition: background-image 0.7s ease-in-out;
+            padding-top: 60px;
+            box-sizing: border-box;
+            color: #c0c0c0;
+        }
 
-        #welcome-page { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 80vh; text-align: center; }
-        #welcome-page h2 { font-size: 1.5rem; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,0.5); color: #888; }
-        #welcome-page .welcome-title { 
-            font-family: 'Roboto Mono', monospace; 
-            font-size: 2.7rem; 
-            font-weight: 700; 
-            color: #e0e0e0; 
-            margin: 1rem 0 2rem 0;
-            white-space: pre-line;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
-        }
-        #start-btn { 
-            background-image: linear-gradient(to right, #212121 0%, #000000 51%, #212121 100%);
-            background-size: 200% auto; 
-            color: #c0c0c0; 
-            padding: 1rem 2rem; 
-            border: 1px solid #333; 
-            border-radius: 8px; 
-            font-size: 1rem; 
-            font-weight: bold; 
-            cursor: pointer; 
-            transition: 0.5s; 
-            box-shadow: 0 4px 15px 0 rgba(0,0,0,0.6); 
-        }
-        #start-btn:hover { background-position: right center; color: #fff; }
+        #welcome-page { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 80vh; text-align: center; }
+        #welcome-page h2 { font-size: 1.5rem; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,0.5); color: #888; }
+        #welcome-page .welcome-title {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 2.7rem;
+            font-weight: 700;
+            color: #e0e0e0;
+            margin: 1rem 0 2rem 0;
+            white-space: pre-line;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+        }
+        #start-btn {
+            background-image: linear-gradient(to right, #212121 0%, #000000 51%, #212121 100%);
+            background-size: 200% auto;
+            color: #c0c0c0;
+            padding: 1rem 2rem;
+            border: 1px solid #333;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.5s;
+            box-shadow: 0 4px 15px 0 rgba(0,0,0,0.6);
+        }
+        #start-btn:hover { background-position: right center; color: #fff; }
 
-        .main-title { font-family: 'Roboto Mono', monospace; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #e0e0e0; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
-        .datetime { 
-            text-align: center; 
-            margin-bottom: 1rem; 
-            font-size: 1rem; 
-            color: #888;
-            font-weight: 600; 
-            background-color: rgba(0,0,0,0.6);
-            backdrop-filter: blur(2px); 
-            padding: 4px; 
-            border-radius: 4px; 
-            border: 1px solid #333;
-        }
-        .users-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-            justify-items: center;
-            max-height: calc(100vh - 200px);
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-        .user-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100px;
-            height: 100px;
-            padding: 0.5rem;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            background-image: linear-gradient(to top, #444 0%, #222 100%);
-            color: #c0c0c0;
-            border: 1px solid #666;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-        }
-        .user-btn:hover { transform: scale(1.05); background-image: linear-gradient(to top, #555 0%, #333 100%); }
-        .back-btn { 
-            display: block; 
-            width: 100%; 
-            padding: 0.75rem; 
-            margin-bottom: 1rem; 
-            background-color: #222;
-            color: #c0c0c0;
-            border: 1px solid #444; 
-            border-radius: 6px; 
-            font-weight: 600; 
-            cursor: pointer; 
-            transition: background-color 0.2s; 
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3); 
-        }
-        .back-btn:hover { background-color: #333; }
-        .content-container { 
-            padding: 1rem; 
-            box-sizing: border-box; 
-            background-color: rgba(0,0,0,0.4);
-            backdrop-filter: blur(3px); 
-            border-radius: 12px; 
-            border: 1px solid rgba(255,255,255,0.1); 
-        }
-        .user-details-text {
-            color: #c0c0c0;
-            margin-bottom: 1rem;
-            text-align: left;
-            background-color: #222;
-            backdrop-filter: blur(2px);
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid #333;
-        }
-        .user-details-text h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: #e0e0e0;
-        }
-        .user-details-text ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            font-size: 0.9rem;
-        }
-        .user-details-text li {
-            margin-bottom: 0.25rem;
-        }
-        .number-grid { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 4px; }
-        .number-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 500;
-            font-size: 0.9rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.2s, transform 0.2s;
-            padding: 0.5rem 1rem;
-            background-color: #333;
-            border: 1px solid #444;
-            color: #fff;
-            text-decoration: none;
-        }
-        .number-btn:hover { transform: translateY(-1px); background-color: #444; }
-        .number-btn.disabled { background-color: #222; border-color: #333; color: #555; cursor: not-allowed; }
+        .main-title { font-family: 'Roboto Mono', monospace; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #e0e0e0; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
+        .datetime {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: #888;
+            font-weight: 600;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(2px);
+            padding: 4px;
+            border-radius: 4px;
+            border: 1px solid #333;
+        }
+        .users-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            justify-items: center;
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        .user-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100px;
+            height: 100px;
+            padding: 0.5rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background-image: linear-gradient(to top, #444 0%, #222 100%);
+            color: #c0c0c0;
+            border: 1px solid #666;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+        }
+        .user-btn:hover { transform: scale(1.05); background-image: linear-gradient(to top, #555 0%, #333 100%); }
+        .back-btn {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            background-color: #222;
+            color: #c0c0c0;
+            border: 1px solid #444;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .back-btn:hover { background-color: #333; }
+        .content-container {
+            padding: 1rem;
+            box-sizing: border-box;
+            background-color: rgba(0,0,0,0.4);
+            backdrop-filter: blur(3px);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .user-details-text {
+            color: #c0c0c0;
+            margin-bottom: 1rem;
+            text-align: left;
+            background-color: #222;
+            backdrop-filter: blur(2px);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+        .user-details-text h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #e0e0e0;
+        }
+        .user-details-text ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        .user-details-text li {
+            margin-bottom: 0.25rem;
+        }
+        .number-grid { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 4px; }
+        .number-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.2s;
+            padding: 0.5rem 1rem;
+            background-color: #333;
+            border: 1px solid #444;
+            color: #fff;
+            text-decoration: none;
+        }
+        .number-btn:hover { transform: translateY(-1px); background-color: #444; }
+        .number-btn.disabled { background-color: #222; border-color: #333; color: #555; cursor: not-allowed; }
+        .number-btn.clicked { background-color: #880000; border-color: #660000; }
+        .number-btn.clicked:hover { background-color: #660000; }
+        .fade-transition { transition: opacity 0.5s ease-in-out; }
+        .logo-top-left {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+            max-width: 180px;
+            height: auto;
+            filter: invert(1) grayscale(1);
+        }
 
-        .number-btn.clicked { background-color: #880000; border-color: #660000; }
-        .number-btn.clicked:hover { background-color: #660000; }
-        .fade-transition { transition: opacity 0.5s ease-in-out; }
+        /* MEDIA QUERIES UNTUK TAMPILAN RESPONSIVE */
+        @media (max-width: 768px) {
+            #welcome-page .welcome-title { font-size: 2rem; }
+            .users-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .user-btn { width: 120px; height: 120px; }
+            .logo-top-left { max-width: 150px; }
+        }
 
-        .logo-top-left {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            z-index: 10;
-            max-width: 180px;
-            height: auto;
-            filter: invert(1) grayscale(1); /* Menjadikan logo hitam putih untuk tema gelap */
-        }
-
-        /* MEDIA QUERIES UNTUK TAMPILAN RESPONSIVE */
-        @media (max-width: 768px) {
-            #welcome-page .welcome-title { font-size: 2rem; }
-            .users-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-            .user-btn { width: 120px; height: 120px; }
-            .logo-top-left { max-width: 150px; }
-        }
-
-        @media (max-width: 480px) {
-            #welcome-page .welcome-title { font-size: 1.5rem; }
-            .users-grid { grid-template-columns: 1fr; gap: 1rem; }
-            .user-btn { width: 100%; height: 80px; }
-            .logo-top-left { max-width: 120px; }
-        }
-    </style>
+        @media (max-width: 480px) {
+            #welcome-page .welcome-title { font-size: 1.5rem; }
+            .users-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .user-btn { width: 100%; height: 80px; }
+            .logo-top-left { max-width: 120px; }
+        }
+    </style>
 </head>
 <body class="min-h-screen p-4">
-    <img src="logo.png" alt="Project HMS Logo" class="logo-top-left">
+    <img src="logo.png" alt="Project HMS Logo" class="logo-top-left">
 
-    <div class="max-w-md mx-auto">
-        <div id="welcome-page" class="fade-transition" style="opacity: 1;">
-            <h2>WELCOME TO</h2>
-            <h1 class="welcome-title">Acorn Consultant<br>Quantity Project</h1>
-            <button id="start-btn">PRESS START TO CONTINUE</button>
-        </div>
-        <div id="main-view" class="fade-transition" style="display: none; opacity: 0;">
-            <h1 class="main-title text-center">PROJECT HMS 2025</h1>
-            <div id="datetime" class="datetime"></div>
-            <div id="user-buttons-container" class="users-grid"></div>
-        </div>
-        <div id="content-display-area"></div>
-    </div>
+    <div class="max-w-md mx-auto">
+        <div id="welcome-page" class="fade-transition" style="opacity: 1;">
+            <h2>WELCOME TO</h2>
+            <h1 class="welcome-title">Acorn Consultant<br>Quantity Project</h1>
+            <button id="start-btn" aria-label="Press start to continue">PRESS START TO CONTINUE</button>
+        </div>
+        <div id="main-view" class="fade-transition" style="display: none; opacity: 0;">
+            <h1 class="main-title text-center">PROJECT HMS 2025</h1>
+            <div id="datetime" class="datetime"></div>
+            <div id="user-buttons-container" class="users-grid"></div>
+        </div>
+        <div id="content-display-area"></div>
+    </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let clickedNumbers = JSON.parse(localStorage.getItem('clickedNumbers')) || [];
-            let activeContentId = null;
-            let isAnimating = false;
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let clickedNumbers = JSON.parse(localStorage.getItem('clickedNumbers')) || [];
+            let activeContentId = null;
 
-            const users = [
-                { id: 'user01', name: 'Sulastri', password: 'u775', links: ['https://urldefense.com/v3/__https:/s1.aobod.com/upload/20250274/login.asp__;!!HEtReXZgYQ!XQZr6Tzx3mA5-GyzzYyZkuDFo7QJ8IPZqysbWxlRxfM2dOzSv8v8SNAp6XK5VFxqVLFinYl8XA$'] },
-                { id: 'user02', name: 'Mawar', password: 'u967', links: ['https://urldefense.com/v3/__https:/s1.aobod.com/upload/20250274/login.asp__;!!HEtReXZgYQ!XQZr6Tzx3mA5-GyzzYyZkuDFo7QJ8IPZqysbWxlRxfM2dOzSv8v8SNAp6XK5VFxqVLFinYl8XA$'] },
-                { id: 'user03', name: 'Rondang', password: 'u608', links: ['https://urldefense.com/v3/__https:/s1.aobod.com/upload/20250274/login.asp__;!!HEtReXZgYQ!XQZr6Tzx3mA5-GyzzYyZkuDFo7QJ8IPZqysbWxlRxfM2dOzSv8v8SNAp6XK5VFxqVLFinYl8XA$'] },
-                { id: 'user04', name: 'Griselda', password: 'u722', links: ['https://urldefense.com/v3/__https:/s1.aobod.com/upload/20250274/login.asp__;!!HEtReXZgYQ!XQZr6Tzx3mA5-GyzzYyZkuDFo7QJ8IPZqysbWxlRxfM2dOzSv8v8SNAp6XK5VFxqVLFinYl8XA$'] },
-                { id: 'user05', name: 'Nia', password: 'u053', links: ['https://urldefense.com/v3/__https:/s1.aobod.com/upload/20250274/login.asp__;!!HEtReXZgYQ!XQZr6Tzx3mA5-GyzzYyZkuDFo7QJ8IPZqysbWxlRxfM2dOzSv8v8SNAp6XK5VFxqVLFinYl8XA$'] },
-                { id: 'user06', name: 'Tania', password: 'u141', links: ['https://urldefense.com/v3/__https:/s1.aobod.com/upload/20250274/login.asp__;!!HEtReXZgYQ!XQZr6Tzx3mA5-GyzzYyZkuDFo7QJ8IPZqysbWxlRxfM2dOzSv8v8SNAp6XK5VFxqVLFinYl8XA$'] },
-                { id: 'user07', name: 'Ami', password: 'u748', links: ['https://urldefense.com/v3/__https:/s1.aobod.com/upload/20250274/login.asp__;!!HEtReXZgYQ!XQZr6Tzx3mA5-GyzzYyZkuDFo7QJ8IPZqysbWxlRxfM2dOzSv8v8SNAp6XK5VFxqVLFinYl8XA$'] },
-                { id: 'user08', name: 'Novi', password: 'u239', links: ['https://urldefense.com/v3/__https:/s1.aobod.com/upload/20250274/login.asp__;!!HEtReXZgYQ!XQZr6Tzx3mA5-GyzzYyZkuDFo7QJ8IPZqysbWxlRxfM2dOzSv8v8SNAp6XK5VFxqVLFinYl8XA$'] },
-            ];
+            const users = [
+                { id: 'user01', name: 'Sulastri', password: 'u775', links: ['https://urldefense.com/v3/__https:/s1.aobod.com/upload/20250274/login.asp__;!!HEtReXZgYQ!XQZr6Tzx3mA5-GyzzYyZkuDFo7QJ8IPZqysbWxlRxfM2dOzSv8v8SNAp6XK5VFxqVLFinYl8XA$'] },
+                { id: 'user02', name: 'Mawar', password: 'u967', links: ['https://urldefense.com/v3/__https:/s1.aobod.com/upload/20250274/login.asp__;!!HEtReXZgYQ!XQZr6Tzx3mA5-GyzzYyZkuDFo7QJ8IPZqysbWxlRxfM2dOzSv8v8SNAp6XK5VFxqVLFinYl8XA$'] },
+                { id: 'user03', name: 'Rondang', password: 'u608', links: ['https://urldefense.com/v3/__https:/s1.aobod.com/upload/20250274/login.asp__;!!HEtReXZgYQ!XQZr6Tzx3mA5-GyzzYyZkuDFo7QJ8IPZqysbWxlRxfM2dOzSv8v8SNAp6XK5VFxqVLFinYl8XA$'] },
+                { id: 'user04', name: 'Griselda', password: 'u722', links: ['https://urldefense.com/v3/__https:/s1.aobod.com/upload/20250274/login.asp__;!!HEtReXZgYQ!XQZr6Tzx3mA5-GyzzYyZkuDFo7QJ8IPZqysbWxlRxfM2dOzSv8v8SNAp6XK5VFxqVLFinYl8XA$'] },
+                { id: 'user05', name: 'Nia', password: 'u053', links: ['https://urldefense.com/v3/__https:/s1.aobod.com/upload/20250274/login.asp__;!!HEtReXZgYQ!XQZr6Tzx3mA5-GyzzYyZkuDFo7QJ8IPZqysbWxlRxfM2dOzSv8v8SNAp6XK5VFxqVLFinYl8XA$'] },
+                { id: 'user06', name: 'Tania', password: 'u141', links: ['https://urldefense.com/v3/__https:/s1.aobod.com/upload/20250274/login.asp__;!!HEtReXZgYQ!XQZr6Tzx3mA5-GyzzYyZkuDFo7QJ8IPZqysbWxlRxfM2dOzSv8v8SNAp6XK5VFxqVLFinYl8XA$'] },
+                { id: 'user07', name: 'Ami', password: 'u748', links: ['https://urldefense.com/v3/__https:/s1.aobod.com/upload/20250274/login.asp__;!!HEtReXZgYQ!XQZr6Tzx3mA5-GyzzYyZkuDFo7QJ8IPZqysbWxlRxfM2dOzSv8v8SNAp6XK5VFxqVLFinYl8XA$'] },
+                { id: 'user08', name: 'Novi', password: 'u239', links: ['https://urldefense.com/v3/__https:/s1.aobod.com/upload/20250274/login.asp__;!!HEtReXZgYQ!XQZr6Tzx3mA5-GyzzYyZkuDFo7QJ8IPZqysbWxlRxfM2dOzSv8v8SNAp6XK5VFxqVLFinYl8XA$'] },
+            ];
 
-            const welcomePage = document.getElementById('welcome-page');
-            const startBtn = document.getElementById('start-btn');
-            const mainView = document.getElementById('main-view');
-            const userButtonsContainer = document.getElementById('user-buttons-container');
-            const contentDisplayArea = document.getElementById('content-display-area');
-            const mainContainer = document.querySelector('.max-w-md');
-            const originalBodyBg = document.body.style.backgroundImage;
-            const darkThemeGradient = `linear-gradient(135deg, #111 0%, #000 100%)`;
-            const darkThemePattern = `url("data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 10 10' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23111' fill-opacity='0.6' fill-rule='evenodd'%3E%3Cpath d='M0 10l10-10m-5 0l10 10m-5-10l10 10'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`;
+            const welcomePage = document.getElementById('welcome-page');
+            const startBtn = document.getElementById('start-btn');
+            const mainView = document.getElementById('main-view');
+            const userButtonsContainer = document.getElementById('user-buttons-container');
+            const contentDisplayArea = document.getElementById('content-display-area');
 
-            function generateUserAssets(user) {
-                const userButton = document.createElement('button');
-                userButton.className = 'user-btn';
-                userButton.textContent = user.name;
-                userButton.dataset.target = user.id;
-                userButtonsContainer.appendChild(userButton);
+            function generateUserAssets(user) {
+                const userButton = document.createElement('button');
+                userButton.className = 'user-btn';
+                userButton.textContent = user.name;
+                userButton.dataset.target = user.id;
+                userButtonsContainer.appendChild(userButton);
 
-                const userDetailsHTML = `
-                    <div class="user-details-text">
-                        <h3 class="font-bold text-lg">${user.name}</h3>
-                        <ul class="list-none p-0 mt-2">
-                            <li><span class="font-semibold">- ID :</span> ${user.id}</li>
-                            <li><span class="font-semibold">- Password :</span> ${user.password}</li>
-                        </ul>
-                    </div>
-                `;
+                const userDetailsHTML = `
+                    <div class="user-details-text">
+                        <h3 class="font-bold text-lg">${user.name}</h3>
+                        <ul class="list-none p-0 mt-2">
+                            <li><span class="font-semibold">- ID :</span> ${user.id}</li>
+                            <li><span class="font-semibold">- Password :</span> ${user.password}</li>
+                        </ul>
+                    </div>
+                `;
 
-                let numberGridHTML = '';
-                const url = user.links[0] || '#';
-                const isEnabled = user.links[0] ? '' : 'disabled';
-                const isClicked = clickedNumbers.includes(String(user.id)) ? 'clicked' : '';
-                
-                numberGridHTML += `<a href="${url}" target="_blank" rel="noopener noreferrer" class="number-btn ${isEnabled} ${isClicked}">Press For The Link</a>`;
+                let numberGridHTML = '';
+                const url = user.links[0] || '#';
+                const isEnabled = user.links[0] ? '' : 'disabled';
+                const isClicked = clickedNumbers.includes(String(user.id)) ? 'clicked' : '';
 
-                const contentWrapper = document.createElement('div');
-                contentWrapper.id = user.id;
-                contentWrapper.className = 'content-container fade-transition';
-                contentWrapper.style.display = 'none';
-                contentWrapper.style.opacity = '0';
-                contentWrapper.innerHTML = `<button class="back-btn">← Kembali ke Menu Utama</button>${userDetailsHTML}<div class="number-grid">${numberGridHTML}</div>`;
-                contentDisplayArea.appendChild(contentWrapper);
-            }
+                numberGridHTML += `<a href="${url}" target="_blank" rel="noopener noreferrer" class="number-btn ${isEnabled} ${isClicked}">Press For The Link</a>`;
 
-            function showUserGridWithZoom(targetId, clickedButton) {
-                if (isAnimating) return;
-                isAnimating = true;
-                activeContentId = targetId;
+                const contentWrapper = document.createElement('div');
+                contentWrapper.id = user.id;
+                contentWrapper.className = 'content-container fade-transition';
+                contentWrapper.style.display = 'none';
+                contentWrapper.style.opacity = '0';
+                contentWrapper.innerHTML = `<button class="back-btn" aria-label="Back to main menu">← Kembali ke Menu Utama</button>${userDetailsHTML}<div class="number-grid">${numberGridHTML}</div>`;
+                contentDisplayArea.appendChild(contentWrapper);
 
-                const rect = clickedButton.getBoundingClientRect();
-                const zoomCircle = document.createElement('div');
-                zoomCircle.style.position = 'fixed';
-                zoomCircle.style.left = `${rect.left}px`;
-                zoomCircle.style.top = `${rect.top}px`;
-                zoomCircle.style.width = `${rect.width}px`;
-                zoomCircle.style.height = `${rect.height}px`;
-                zoomCircle.style.backgroundImage = window.getComputedStyle(clickedButton).backgroundImage;
-                zoomCircle.style.borderRadius = '8px';
-                zoomCircle.style.zIndex = '9999';
-                zoomCircle.style.transform = 'scale(1)';
-                zoomCircle.style.opacity = '1';
-                zoomCircle.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-out';
-                document.body.appendChild(zoomCircle);
+                // Add event listener for the back button
+                contentWrapper.querySelector('.back-btn').addEventListener('click', () => {
+                    showScreen('main-view');
+                });
+            }
 
-                setTimeout(() => {
-                    zoomCircle.style.transform = 'scale(50)';
-                }, 20);
+            function updateDateTime() {
+                const now = new Date();
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Jakarta' };
+                document.getElementById('datetime').textContent = now.toLocaleString('id-ID', options);
+            }
 
-                setTimeout(() => {
-                    mainView.style.opacity = '0';
-                    mainView.style.display = 'none';
-                    document.body.style.backgroundImage = `${darkThemePattern}, ${darkThemeGradient}`;
-                    const contentToShow = document.getElementById(targetId);
-                    if (contentToShow) {
-                        contentToShow.style.display = 'block';
-                        contentToShow.offsetWidth;
-                        contentToShow.style.opacity = '1';
-                    }
-                }, 300);
+            // Fungsi yang disederhanakan untuk transisi
+            function showScreen(screenToShow) {
+                welcomePage.style.display = 'none';
+                mainView.style.display = 'none';
+                contentDisplayArea.childNodes.forEach(node => {
+                    if (node.nodeType === 1) { node.style.display = 'none'; }
+                });
 
-                setTimeout(() => {
-                    zoomCircle.style.opacity = '0';
-                }, 600);
+                const screen = document.getElementById(screenToShow);
+                if (screen) {
+                    screen.style.display = 'block';
+                    setTimeout(() => screen.style.opacity = '1', 50);
+                }
+            }
 
-                setTimeout(() => {
-                    zoomCircle.remove();
-                    isAnimating = false;
-                }, 1200);
-            }
+            users.forEach(generateUserAssets);
 
-            function showMainView() {
-                if (isAnimating || !activeContentId) return;
-                isAnimating = true;
+            startBtn.addEventListener('click', () => {
+                welcomePage.style.opacity = '0';
+                setTimeout(() => {
+                    showScreen('main-view');
+                }, 500);
+            });
 
-                const activeContent = document.getElementById(activeContentId);
-                if (activeContent) {
-                    activeContent.style.opacity = '0';
-                }
+            document.addEventListener('click', function(event) {
+                const target = event.target.closest('.user-btn, a.number-btn');
+                if (!target) return;
 
-                const targetButton = document.querySelector(`.user-btn[data-target="${activeContentId}"]`);
-                if (!targetButton) { isAnimating = false; return; }
-                const rectTarget = targetButton.getBoundingClientRect();
+                if (target.matches('.user-btn')) {
+                    activeContentId = target.dataset.target;
+                    showScreen(activeContentId);
+                }
+                else if (target.matches('a.number-btn.disabled')) {
+                    event.preventDefault();
+                    alert('Tidak ada link yang tersedia untuk nomor ini.');
+                }
+            });
 
-                const color = window.getComputedStyle(activeContent).backgroundImage;
-                const zoomCircle = document.createElement('div');
-                zoomCircle.style.position = 'fixed';
-                zoomCircle.style.left = '0';
-                zoomCircle.style.top = '0';
-                zoomCircle.style.width = '100vw';
-                zoomCircle.style.height = '100vh';
-                zoomCircle.style.backgroundImage = color;
-                zoomCircle.style.borderRadius = '0%';
-                zoomCircle.style.zIndex = '9999';
-                zoomCircle.style.transition = 'all 0.7s cubic-bezier(0.5, 0, 0.75, 0)';
-                document.body.appendChild(zoomCircle);
-
-                requestAnimationFrame(() => {
-                    setTimeout(() => {
-                        if (activeContent) { activeContent.style.display = 'none'; }
-                        mainView.style.display = 'block';
-                        mainView.offsetWidth;
-                        mainView.style.opacity = '1';
-                        document.body.style.backgroundImage = `${darkThemePattern}, ${darkThemeGradient}`;
-
-                        zoomCircle.style.left = `${rectTarget.left}px`;
-                        zoomCircle.style.top = `${rectTarget.top}px`;
-                        zoomCircle.style.width = `${rectTarget.width}px`;
-                        zoomCircle.style.height = `${rectTarget.height}px`;
-                        zoomCircle.style.borderRadius = '8px';
-                    }, 20);
-
-                    setTimeout(() => {
-                        zoomCircle.remove();
-                        activeContentId = null;
-                        isAnimating = false;
-                    }, 750);
-                });
-            }
-
-            mainContainer.addEventListener('click', function(event) {
-                const target = event.target.closest('.user-btn, .back-btn, a.number-btn');
-                if (!target || isAnimating) return;
-
-                if (target.matches('.user-btn')) {
-                    showUserGridWithZoom(target.dataset.target, target);
-                }
-                else if (target.matches('.back-btn')) {
-                    showMainView();
-                }
-                else if (target.matches('a.number-btn:not(.disabled)')) {
-                    target.classList.add('clicked');
-                    const user = users.find(u => u.id === activeContentId);
-                    if (user && !clickedNumbers.includes(user.id)) {
-                        clickedNumbers.push(user.id);
-                        localStorage.setItem('clickedNumbers', JSON.stringify(clickedNumbers));
-                    }
-                }
-                else if (target.matches('a.number-btn.disabled')) {
-                    event.preventDefault();
-                    alert('Tidak ada link yang tersedia untuk nomor ini.');
-                }
-            });
-
-            users.forEach(generateUserAssets);
-
-            startBtn.addEventListener('click', function() {
-                if(isAnimating) return; isAnimating = true;
-                welcomePage.style.opacity = '0';
-                setTimeout(() => {
-                    welcomePage.style.display = 'none';
-                    mainView.style.display = 'block';
-                    setTimeout(() => { mainView.style.opacity = '1'; isAnimating = false; }, 20);
-                }, 500);
-            });
-
-            function updateDateTime() {
-                const now = new Date();
-                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Jakarta' };
-                document.getElementById('datetime').textContent = now.toLocaleString('id-ID', options);
-            }
-
-            updateDateTime();
-            setInterval(updateDateTime, 1000);
-        });
-    </script>
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+        });
+    </script>
 </body>
 </html>
