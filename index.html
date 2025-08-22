@@ -6,10 +6,8 @@
     <title>Project Arutala 2025</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Menggunakan font yang bersih dan kaku untuk kesan teknis */
         @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
 
-        /* TEMA BARU: Hitam Minimalis - REVISI 2 */
         body {
             font-family: 'Roboto Mono', monospace;
             background-color: #000;
@@ -22,10 +20,23 @@
             color: #c0c0c0;
         }
 
-        #welcome-page { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 80vh; text-align: center; }
-        #welcome-page h2 { font-size: 1.5rem; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,0.5); color: #888; }
+        #welcome-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            text-align: center;
+        }
+
+        #welcome-page h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            color: #888;
+        }
+
         #welcome-page .welcome-title {
-            font-family: 'Roboto Mono', monospace;
             font-size: 2.7rem;
             font-weight: 700;
             color: #e0e0e0;
@@ -33,6 +44,7 @@
             white-space: pre-line;
             text-shadow: 0 2px 5px rgba(0,0,0,0.8);
         }
+
         #start-btn {
             background-image: linear-gradient(to right, #212121 0%, #000000 51%, #212121 100%);
             background-size: 200% auto;
@@ -46,9 +58,20 @@
             transition: 0.5s;
             box-shadow: 0 4px 15px 0 rgba(0,0,0,0.6);
         }
-        #start-btn:hover { background-position: right center; color: #fff; }
 
-        .main-title { font-family: 'Roboto Mono', monospace; font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #e0e0e0; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
+        #start-btn:hover {
+            background-position: right center;
+            color: #fff;
+        }
+
+        .main-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #e0e0e0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
         .datetime {
             text-align: center;
             margin-bottom: 1rem;
@@ -61,6 +84,7 @@
             border-radius: 4px;
             border: 1px solid #333;
         }
+
         .users-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -71,6 +95,7 @@
             overflow-y: auto;
             padding-right: 10px;
         }
+
         .user-btn {
             display: flex;
             align-items: center;
@@ -88,7 +113,12 @@
             text-align: center;
             box-shadow: 0 4px 8px rgba(0,0,0,0.5);
         }
-        .user-btn:hover { transform: scale(1.05); background-image: linear-gradient(to top, #555 0%, #333 100%); }
+
+        .user-btn:hover {
+            transform: scale(1.05);
+            background-image: linear-gradient(to top, #555 0%, #333 100%);
+        }
+
         .back-btn {
             display: block;
             width: 100%;
@@ -103,7 +133,11 @@
             transition: background-color 0.2s;
             box-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
-        .back-btn:hover { background-color: #333; }
+
+        .back-btn:hover {
+            background-color: #333;
+        }
+
         .content-container {
             padding: 1rem;
             box-sizing: border-box;
@@ -112,6 +146,7 @@
             border-radius: 12px;
             border: 1px solid rgba(255,255,255,0.1);
         }
+
         .user-details-text {
             color: #c0c0c0;
             margin-bottom: 1rem;
@@ -122,22 +157,31 @@
             border-radius: 8px;
             border: 1px solid #333;
         }
+
         .user-details-text h3 {
             font-size: 1.25rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
             color: #e0e0e0;
         }
+
         .user-details-text ul {
             list-style: none;
             padding: 0;
             margin: 0;
             font-size: 0.9rem;
         }
+
         .user-details-text li {
             margin-bottom: 0.25rem;
         }
-        .number-grid { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 4px; }
+
+        .number-grid {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 4px;
+        }
+
         .number-btn {
             display: flex;
             align-items: center;
@@ -153,11 +197,32 @@
             color: #fff;
             text-decoration: none;
         }
-        .number-btn:hover { transform: translateY(-1px); background-color: #444; }
-        .number-btn.disabled { background-color: #222; border-color: #333; color: #555; cursor: not-allowed; }
-        .number-btn.clicked { background-color: #880000; border-color: #660000; }
-        .number-btn.clicked:hover { background-color: #660000; }
-        .fade-transition { transition: opacity 0.5s ease-in-out; }
+
+        .number-btn:hover {
+            transform: translateY(-1px);
+            background-color: #444;
+        }
+
+        .number-btn.disabled {
+            background-color: #222;
+            border-color: #333;
+            color: #555;
+            cursor: not-allowed;
+        }
+
+        .number-btn.clicked {
+            background-color: #880000;
+            border-color: #660000;
+        }
+
+        .number-btn.clicked:hover {
+            background-color: #660000;
+        }
+
+        .fade-transition {
+            transition: opacity 0.5s ease-in-out;
+        }
+
         .logo-top-left {
             position: fixed;
             top: 10px;
@@ -168,19 +233,40 @@
             filter: invert(1) grayscale(1);
         }
 
-        /* MEDIA QUERIES UNTUK TAMPILAN RESPONSIVE */
         @media (max-width: 768px) {
-            #welcome-page .welcome-title { font-size: 2rem; }
-            .users-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-            .user-btn { width: 120px; height: 120px; }
-            .logo-top-left { max-width: 150px; }
+            #welcome-page .welcome-title {
+                font-size: 2rem;
+            }
+
+            .users-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .user-btn {
+                width: 120px;
+                height: 120px;
+            }
+
+            .logo-top-left {
+                max-width: 150px;
+            }
         }
 
         @media (max-width: 480px) {
-            #welcome-page .welcome-title { font-size: 1.5rem; }
-            .users-grid { grid-template-columns: 1fr; gap: 1rem; }
-            .user-btn { width: 100%; height: 80px; }
-            .logo-top-left { max-width: 120px; }
+            #welcome-page .welcome-title {
+                font-size: 1.5rem;
+            }
+
+            .users-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .user-btn {
+                width: 100%;
+                height: 80px;
+            }
         }
     </style>
 </head>
@@ -207,19 +293,20 @@
             let activeContentId = null;
 
             const users = [
-                { name: 'Rondang', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                { name: 'Sulastri', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                { name: 'Evie', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                { name: 'Mawar', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                { name: 'Sri Suwarti', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                { name: 'Yohana Ami', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                { name: 'Neneng', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                { name: 'Poppy', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                { name: 'Rachma', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },                      { name: 'Ninik', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                { name: 'Rosi', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                { name: 'Ari Yuliawati', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                    { name: 'Nurlaili', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-];
+                { id: 'rondang', name: 'Rondang', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                { id: 'sulastri', name: 'Sulastri', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                { id: 'evie', name: 'Evie', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                { id: 'mawar', name: 'Mawar', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                { id: 'srisuwarti', name: 'Sri Suwarti', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                { id: 'yohanaami', name: 'Yohana Ami', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                { id: 'neneng', name: 'Neneng', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                { id: 'poppy', name: 'Poppy', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                { id: 'rachma', name: 'Rachma', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                { id: 'ninik', name: 'Ninik', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                { id: 'rosi', name: 'Rosi', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                { id: 'ariyuliawati', name: 'Ari Yuliawati', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                { id: 'nurlaili', name: 'Nurlaili', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+            ];
 
             const welcomePage = document.getElementById('welcome-page');
             const startBtn = document.getElementById('start-btn');
@@ -231,7 +318,7 @@
                 const userButton = document.createElement('button');
                 userButton.className = 'user-btn';
                 userButton.textContent = user.name;
-                userButton.dataset.target = user.id;
+                userButton.dataset.target = user.id; 
                 userButtonsContainer.appendChild(userButton);
 
                 const userDetailsHTML = `
@@ -239,7 +326,6 @@
                         <h3 class="font-bold text-lg">${user.name}</h3>
                         <ul class="list-none p-0 mt-2">
                             <li><span class="font-semibold">- ID :</span> ${user.id}</li>
-                            <li><span class="font-semibold">- Password :</span> ${user.password}</li>
                         </ul>
                     </div>
                 `;
@@ -259,7 +345,6 @@
                 contentWrapper.innerHTML = `<button class="back-btn" aria-label="Back to main menu">← Kembali ke Menu Utama</button>${userDetailsHTML}<div class="number-grid">${numberGridHTML}</div>`;
                 contentDisplayArea.appendChild(contentWrapper);
 
-                // Add event listener for the back button
                 contentWrapper.querySelector('.back-btn').addEventListener('click', () => {
                     showScreen('main-view');
                 });
@@ -271,7 +356,6 @@
                 document.getElementById('datetime').textContent = now.toLocaleString('id-ID', options);
             }
 
-            // Fungsi yang disederhanakan untuk transisi
             function showScreen(screenToShow) {
                 welcomePage.style.display = 'none';
                 mainView.style.display = 'none';
@@ -296,14 +380,21 @@
             });
 
             document.addEventListener('click', function(event) {
-                const target = event.target.closest('.user-btn, a.number-btn');
+                const target = event.target.closest('.user-btn, a.number-btn, .back-btn');
                 if (!target) return;
 
                 if (target.matches('.user-btn')) {
                     activeContentId = target.dataset.target;
                     showScreen(activeContentId);
-                }
-                else if (target.matches('a.number-btn.disabled')) {
+                } else if (target.matches('.back-btn')) {
+                    showScreen('main-view');
+                } else if (target.matches('a.number-btn') && !target.matches('.disabled')) {
+                    const userId = target.closest('.content-container').id;
+                    if (!clickedNumbers.includes(userId)) {
+                        clickedNumbers.push(userId);
+                        localStorage.setItem('clickedNumbers', JSON.stringify(clickedNumbers));
+                    }
+                } else if (target.matches('a.number-btn.disabled')) {
                     event.preventDefault();
                     alert('Tidak ada link yang tersedia untuk nomor ini.');
                 }
@@ -315,6 +406,3 @@
     </script>
 </body>
 </html>
-
-
-
