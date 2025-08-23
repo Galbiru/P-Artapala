@@ -12,7 +12,7 @@
             font-family: 'Roboto Mono', monospace;
             background-color: #000;
             background-image: url("data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 10 10' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23111' fill-opacity='0.6' fill-rule='evenodd'%3E%3Cpath d='M0 10l10-10m-5 0l10 10m-5-10l10 10'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
-                linear-gradient(135deg, #111 0%, #000 100%);
+            linear-gradient(135deg, #111 0%, #000 100%);
             min-height: 100vh;
             transition: background-image 0.7s ease-in-out;
             padding-top: 60px;
@@ -85,6 +85,13 @@
             border: 1px solid #333;
         }
 
+        .regional-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
         .users-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -96,6 +103,19 @@
             padding-right: 10px;
         }
 
+        .regional-btn, .user-btn, .back-btn {
+            background-image: linear-gradient(to top, #444 0%, #222 100%);
+            color: #c0c0c0;
+            border: 1px solid #666;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+        }
+
         .user-btn {
             display: flex;
             align-items: center;
@@ -104,38 +124,12 @@
             height: 100px;
             padding: 0.5rem;
             font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            background-image: linear-gradient(to top, #444 0%, #222 100%);
-            color: #c0c0c0;
-            border: 1px solid #666;
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
         }
 
         .user-btn:hover {
             transform: scale(1.05);
             background-image: linear-gradient(to top, #555 0%, #333 100%);
-        }
-
-        .back-btn {
-            display: block;
-            width: 100%;
-            padding: 0.75rem;
-            margin-bottom: 1rem;
-            background-color: #222;
-            color: #c0c0c0;
-            border: 1px solid #444;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .back-btn:hover {
-            background-color: #333;
         }
 
         .content-container {
@@ -170,10 +164,6 @@
             padding: 0;
             margin: 0;
             font-size: 0.9rem;
-        }
-
-        .user-details-text li {
-            margin-bottom: 0.25rem;
         }
 
         .number-grid {
@@ -233,9 +223,14 @@
             filter: invert(1) grayscale(1);
         }
 
+        /* MEDIA QUERIES UNTUK TAMPILAN RESPONSIVE */
         @media (max-width: 768px) {
             #welcome-page .welcome-title {
                 font-size: 2rem;
+            }
+
+            .regional-btn {
+                font-size: 1rem;
             }
 
             .users-grid {
@@ -256,6 +251,10 @@
         @media (max-width: 480px) {
             #welcome-page .welcome-title {
                 font-size: 1.5rem;
+            }
+
+            .regional-btn {
+                font-size: 0.9rem;
             }
 
             .users-grid {
@@ -282,46 +281,83 @@
         <div id="main-view" class="fade-transition" style="display: none; opacity: 0;">
             <h1 class="main-title text-center">PROJECT ARUTALA 2025</h1>
             <div id="datetime" class="datetime"></div>
-            <div id="user-buttons-container" class="users-grid"></div>
+            <div id="regional-buttons-container" class="regional-grid">
+                <button class="regional-btn" data-region="jakarta" aria-label="Select Jakarta region">JAKARTA</button>
+                <button class="regional-btn" data-region="bandung" aria-label="Select Bandung region">BANDUNG</button>
+            </div>
+            <div id="user-buttons-container" class="users-grid" style="display: none;"></div>
         </div>
         <div id="content-display-area"></div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            let clickedNumbers = JSON.parse(localStorage.getItem('clickedNumbers')) || [];
+            let clickedNumbers = JSON.parse(localStorage.getItem('clickedNumbers')) || {};
             let activeContentId = null;
 
-            const users = [
-                { id: 'rondang', name: 'Rondang', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                { id: 'sulastri', name: 'Sulastri', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                { id: 'evie', name: 'Evie', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                { id: 'mawar', name: 'Mawar', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                { id: 'srisuwarti', name: 'Sri Suwarti', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                { id: 'yohanaami', name: 'Yohana Ami', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                { id: 'neneng', name: 'Neneng', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                { id: 'poppy', name: 'Poppy', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                { id: 'rachma', name: 'Rachma', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                { id: 'ninik', name: 'Ninik', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                { id: 'rosi', name: 'Rosi', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                { id: 'ariyuliawati', name: 'Ari Yuliawati', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-                { id: 'nurlaili', name: 'Nurlaili', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
-            ];
+            const users = {
+                jakarta: [
+                    { id: 'rondang', name: 'Rondang', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'sulastri', name: 'Sulastri', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'evie', name: 'Evie', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'mawar', name: 'Mawar', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'srisuwarti', name: 'Sri Suwarti', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'yohanaami', name: 'Yohana Ami', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'neneng', name: 'Neneng', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'poppy', name: 'Poppy', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'rachma', name: 'Rachma', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'ninik', name: 'Ninik', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'rosi', name: 'Rosi', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'ariyuliawati', name: 'Ari Yuliawati', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'nurlaili', name: 'Nurlaili', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                ],
+                bandung: [
+                    { id: 'eka', name: 'Eka', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'popon', name: 'Popon', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'ria', name: 'Ria', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'ino', name: 'Ino', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'tatang', name: 'Tatang', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'nuki', name: 'Nuki', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'neti', name: 'Neti', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'renny', name: 'Renny', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'neni', name: 'Neni', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'dian', name: 'Dian', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'eni', name: 'Eni', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'ranny', name: 'Ranny', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'dani', name: 'Dani', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'rangga', name: 'Rangga', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'dewis', name: 'Dewi S', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'ikeu', name: 'Ikeu', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'indra', name: 'Indra', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                    { id: 'wike', name: 'Wike', links: ['https://survey.xmfactory.com/survey?b=1024798&l=708c36caff453a89'] },
+                ]
+            };
 
             const welcomePage = document.getElementById('welcome-page');
             const startBtn = document.getElementById('start-btn');
             const mainView = document.getElementById('main-view');
             const userButtonsContainer = document.getElementById('user-buttons-container');
             const contentDisplayArea = document.getElementById('content-display-area');
+            const regionalButtonsContainer = document.getElementById('regional-buttons-container');
 
-            function generateUserAssets(user) {
-                const userButton = document.createElement('button');
-                userButton.className = 'user-btn';
-                userButton.textContent = user.name;
-                userButton.dataset.target = user.id; 
-                userButtonsContainer.appendChild(userButton);
+            function generateUserButtons(region) {
+                userButtonsContainer.innerHTML = '';
+                const userList = users[region];
+                userList.forEach(user => {
+                    const userButton = document.createElement('button');
+                    userButton.className = 'user-btn';
+                    userButton.textContent = user.name;
+                    userButton.dataset.target = user.id;
+                    userButtonsContainer.appendChild(userButton);
+                });
+                showScreen('main-view');
+                userButtonsContainer.style.display = 'grid';
+            }
 
-                const userDetailsHTML = `
+            function generateUserContent(user) {
+                const contentWrapper = document.getElementById(user.id);
+                if (contentWrapper) return;
+                                const userDetailsHTML = `
                     <div class="user-details-text">
                         <h3 class="font-bold text-lg">${user.name}</h3>
                         <ul class="list-none p-0 mt-2">
@@ -330,22 +366,21 @@
                     </div>
                 `;
 
-                let numberGridHTML = '';
                 const url = user.links[0] || '#';
                 const isEnabled = user.links[0] ? '' : 'disabled';
-                const isClicked = clickedNumbers.includes(String(user.id)) ? 'clicked' : '';
+                const isClicked = clickedNumbers[user.id] ? 'clicked' : '';
 
-                numberGridHTML += `<a href="${url}" target="_blank" rel="noopener noreferrer" class="number-btn ${isEnabled} ${isClicked}">Press For The Link</a>`;
+                const numberGridHTML = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="number-btn ${isEnabled} ${isClicked}">Press For The Link</a>`;
 
-                const contentWrapper = document.createElement('div');
-                contentWrapper.id = user.id;
-                contentWrapper.className = 'content-container fade-transition';
-                contentWrapper.style.display = 'none';
-                contentWrapper.style.opacity = '0';
-                contentWrapper.innerHTML = `<button class="back-btn" aria-label="Back to main menu">← Kembali ke Menu Utama</button>${userDetailsHTML}<div class="number-grid">${numberGridHTML}</div>`;
-                contentDisplayArea.appendChild(contentWrapper);
+                const newContentWrapper = document.createElement('div');
+                newContentWrapper.id = user.id;
+                newContentWrapper.className = 'content-container fade-transition';
+                newContentWrapper.style.display = 'none';
+                newContentWrapper.style.opacity = '0';
+                newContentWrapper.innerHTML = `<button class="back-btn" aria-label="Back to main menu">← Kembali ke Menu Utama</button>${userDetailsHTML}<div class="number-grid">${numberGridHTML}</div>`;
+                contentDisplayArea.appendChild(newContentWrapper);
 
-                contentWrapper.querySelector('.back-btn').addEventListener('click', () => {
+                newContentWrapper.querySelector('.back-btn').addEventListener('click', () => {
                     showScreen('main-view');
                 });
             }
@@ -357,12 +392,14 @@
             }
 
             function showScreen(screenToShow) {
-                welcomePage.style.display = 'none';
-                mainView.style.display = 'none';
-                contentDisplayArea.childNodes.forEach(node => {
-                    if (node.nodeType === 1) { node.style.display = 'none'; }
+                // Hide all screens
+                const allScreens = [welcomePage, mainView, ...Array.from(contentDisplayArea.children)];
+                allScreens.forEach(screen => {
+                    screen.style.display = 'none';
+                    screen.style.opacity = '0';
                 });
 
+                // Show the requested screen
                 const screen = document.getElementById(screenToShow);
                 if (screen) {
                     screen.style.display = 'block';
@@ -370,34 +407,46 @@
                 }
             }
 
-            users.forEach(generateUserAssets);
+            // Adding event listener to regional buttons
+            regionalButtonsContainer.addEventListener('click', function(event) {
+                const target = event.target.closest('.regional-btn');
+                if (target) {
+                    const region = target.dataset.region;
+                    generateUserButtons(region);
+                    regionalButtonsContainer.style.display = 'none'; // Hide regional buttons
+                }
+            });
+
+            // Adding event listener to user buttons
+            userButtonsContainer.addEventListener('click', function(event) {
+                const target = event.target.closest('.user-btn');
+                if (target) {
+                    const userId = target.dataset.target;
+                    const user = users.jakarta.find(u => u.id === userId) || users.bandung.find(u => u.id === userId);
+                    if (user) {
+                        generateUserContent(user);
+                        showScreen(user.id);
+                    }
+                }
+            });
+
+            document.addEventListener('click', function(event) {
+                const target = event.target.closest('a.number-btn:not(.disabled)');
+                if (target) {
+                    const userId = target.closest('.content-container').id;
+                    clickedNumbers[userId] = true;
+                    localStorage.setItem('clickedNumbers', JSON.stringify(clickedNumbers));
+                    target.classList.add('clicked');
+                }
+            });
 
             startBtn.addEventListener('click', () => {
                 welcomePage.style.opacity = '0';
                 setTimeout(() => {
                     showScreen('main-view');
+                    regionalButtonsContainer.style.display = 'grid'; // Show regional buttons
+                    userButtonsContainer.style.display = 'none'; // Hide user buttons
                 }, 500);
-            });
-
-            document.addEventListener('click', function(event) {
-                const target = event.target.closest('.user-btn, a.number-btn, .back-btn');
-                if (!target) return;
-
-                if (target.matches('.user-btn')) {
-                    activeContentId = target.dataset.target;
-                    showScreen(activeContentId);
-                } else if (target.matches('.back-btn')) {
-                    showScreen('main-view');
-                } else if (target.matches('a.number-btn') && !target.matches('.disabled')) {
-                    const userId = target.closest('.content-container').id;
-                    if (!clickedNumbers.includes(userId)) {
-                        clickedNumbers.push(userId);
-                        localStorage.setItem('clickedNumbers', JSON.stringify(clickedNumbers));
-                    }
-                } else if (target.matches('a.number-btn.disabled')) {
-                    event.preventDefault();
-                    alert('Tidak ada link yang tersedia untuk nomor ini.');
-                }
             });
 
             updateDateTime();
