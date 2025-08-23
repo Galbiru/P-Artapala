@@ -98,7 +98,7 @@
             gap: 1.5rem;
             margin-bottom: 1.5rem;
             justify-items: center;
-            max-height: calc(100vh - 200px);
+            max-height: calc(100vh - 250px); /* Disesuaikan agar ada ruang untuk tombol back */
             overflow-y: auto;
             padding-right: 10px;
         }
@@ -127,7 +127,7 @@
             text-align: center;
         }
 
-        .user-btn:hover {
+        .user-btn:hover, .back-btn:hover {
             transform: scale(1.05);
             background-image: linear-gradient(to top, #555 0%, #333 100%);
         }
@@ -228,21 +228,17 @@
             #welcome-page .welcome-title {
                 font-size: 2rem;
             }
-
             .regional-btn {
                 font-size: 1rem;
             }
-
             .users-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 1rem;
             }
-
             .user-btn {
                 width: 120px;
                 height: 120px;
             }
-
             .logo-top-left {
                 max-width: 150px;
             }
@@ -252,16 +248,13 @@
             #welcome-page .welcome-title {
                 font-size: 1.5rem;
             }
-
             .regional-btn {
                 font-size: 0.9rem;
             }
-
             .users-grid {
                 grid-template-columns: 1fr;
                 gap: 1rem;
             }
-
             .user-btn {
                 width: 100%;
                 height: 80px;
@@ -285,6 +278,9 @@
                 <button class="regional-btn" data-region="jakarta" aria-label="Select Jakarta region">JAKARTA</button>
                 <button class="regional-btn" data-region="bandung" aria-label="Select Bandung region">BANDUNG</button>
             </div>
+            
+            <div id="back-to-regional-container" class="mb-4" style="display: none;"></div>
+
             <div id="user-buttons-container" class="users-grid" style="display: none;"></div>
         </div>
         <div id="content-display-area"></div>
@@ -339,9 +335,29 @@
             const userButtonsContainer = document.getElementById('user-buttons-container');
             const contentDisplayArea = document.getElementById('content-display-area');
             const regionalButtonsContainer = document.getElementById('regional-buttons-container');
+            const backToRegionalContainer = document.getElementById('back-to-regional-container'); // [MODIFIKASI]
 
+            // [MODIFIKASI] Seluruh fungsi ini diubah untuk menambahkan tombol back
             function generateUserButtons(region) {
                 userButtonsContainer.innerHTML = '';
+                backToRegionalContainer.innerHTML = ''; // Kosongkan kontainer tombol back sebelumnya
+
+                // 1. Buat tombol kembali
+                const backButton = document.createElement('button');
+                backButton.className = 'back-btn w-full'; // Memakai style .back-btn yang sudah ada
+                backButton.textContent = '← Kembali ke Pilihan Regional';
+                backButton.addEventListener('click', () => {
+                    regionalButtonsContainer.style.display = 'grid';
+                    userButtonsContainer.style.display = 'none';
+                    backToRegionalContainer.style.display = 'none';
+                    userButtonsContainer.innerHTML = ''; // Bersihkan user
+                    backToRegionalContainer.innerHTML = ''; // Bersihkan tombol back
+                });
+
+                backToRegionalContainer.appendChild(backButton);
+                backToRegionalContainer.style.display = 'block'; // Tampilkan kontainer tombol back
+
+                // 2. Buat tombol-tombol user (logika lama)
                 const userList = users[region];
                 userList.forEach(user => {
                     const userButton = document.createElement('button');
@@ -350,6 +366,7 @@
                     userButton.dataset.target = user.id;
                     userButtonsContainer.appendChild(userButton);
                 });
+
                 showScreen('main-view');
                 userButtonsContainer.style.display = 'grid';
             }
@@ -357,7 +374,8 @@
             function generateUserContent(user) {
                 const contentWrapper = document.getElementById(user.id);
                 if (contentWrapper) return;
-                                const userDetailsHTML = `
+
+                const userDetailsHTML = `
                     <div class="user-details-text">
                         <h3 class="font-bold text-lg">${user.name}</h3>
                         <ul class="list-none p-0 mt-2">
@@ -377,11 +395,19 @@
                 newContentWrapper.className = 'content-container fade-transition';
                 newContentWrapper.style.display = 'none';
                 newContentWrapper.style.opacity = '0';
-                newContentWrapper.innerHTML = `<button class="back-btn" aria-label="Back to main menu">← Kembali ke Menu Utama</button>${userDetailsHTML}<div class="number-grid">${numberGridHTML}</div>`;
+                newContentWrapper.innerHTML = `
+                    <button class="back-btn mb-4 w-full" aria-label="Back to regional menu">← Kembali ke Menu Regional</button>
+                    ${userDetailsHTML}
+                    <div class="number-grid">${numberGridHTML}</div>
+                `;
                 contentDisplayArea.appendChild(newContentWrapper);
 
                 newContentWrapper.querySelector('.back-btn').addEventListener('click', () => {
                     showScreen('main-view');
+                    regionalButtonsContainer.style.display = 'grid';
+                    userButtonsContainer.style.display = 'none';
+                    backToRegionalContainer.style.display = 'none';
+                    contentDisplayArea.innerHTML = '';
                 });
             }
 
@@ -392,14 +418,12 @@
             }
 
             function showScreen(screenToShow) {
-                // Hide all screens
                 const allScreens = [welcomePage, mainView, ...Array.from(contentDisplayArea.children)];
                 allScreens.forEach(screen => {
                     screen.style.display = 'none';
                     screen.style.opacity = '0';
                 });
 
-                // Show the requested screen
                 const screen = document.getElementById(screenToShow);
                 if (screen) {
                     screen.style.display = 'block';
@@ -407,17 +431,15 @@
                 }
             }
 
-            // Adding event listener to regional buttons
             regionalButtonsContainer.addEventListener('click', function(event) {
                 const target = event.target.closest('.regional-btn');
                 if (target) {
                     const region = target.dataset.region;
                     generateUserButtons(region);
-                    regionalButtonsContainer.style.display = 'none'; // Hide regional buttons
+                    regionalButtonsContainer.style.display = 'none'; // Sembunyikan pilihan regional
                 }
             });
 
-            // Adding event listener to user buttons
             userButtonsContainer.addEventListener('click', function(event) {
                 const target = event.target.closest('.user-btn');
                 if (target) {
@@ -444,8 +466,9 @@
                 welcomePage.style.opacity = '0';
                 setTimeout(() => {
                     showScreen('main-view');
-                    regionalButtonsContainer.style.display = 'grid'; // Show regional buttons
-                    userButtonsContainer.style.display = 'none'; // Hide user buttons
+                    regionalButtonsContainer.style.display = 'grid'; 
+                    userButtonsContainer.style.display = 'none';
+                    backToRegionalContainer.style.display = 'none'; // [MODIFIKASI] Pastikan ini tersembunyi
                 }, 500);
             });
 
